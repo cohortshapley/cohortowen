@@ -1,18 +1,14 @@
 from setuptools import setup, find_packages
 import sys
 
-setup(name='cohortshapley',
+setup(name='cohortowen',
       packages=[package for package in find_packages()
                 if package.startswith('cohortowen')],
       install_requires=[
           'numpy',
           'pandas',
-          'itertools',
           'tqdm_pathos',
-          'math',
-          'sklearn',
-          'urllib',
-          'os'
+          'scikit-learn',
       ],
       
       description='Cohort Owen',

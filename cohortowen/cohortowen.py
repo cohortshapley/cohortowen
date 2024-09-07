@@ -76,10 +76,10 @@ class CohortShapley():
             self.shapley_values = self.calculate_shapley_value_one(self.subject_indices)
         elif self.parallel > 0:
             self.printlog("parallel processing with {0} processes".format(self.parallel))
-            shapleys = tqdm_pathos.map(self.calculate_shapley_value_one_fast,self.subject_indices,n_cpus=self.parallel)
+            shapleys = tqdm_pathos.map(self.calculate_shapley_value_one,self.subject_indices,n_cpus=self.parallel)
             self.shapley_values = np.vstack(shapleys)
         else:
-            self.shapley_values = np.array([self.calculate_shapley_value_one(subject_index) for subject_index in self.subject_indices]).reshape(self.data.shape)
+            self.shapley_values = np.array([self.calculate_shapley_value_one(subject_index) for subject_index in self.subject_indices]).reshape([len(self.subject_indices),self.data.shape[1]])
     
 def legal_permutations_generator(union_structure):
     #union_structure must be a list of lists of integers where each sublist represents one union
@@ -109,3 +109,4 @@ class CohortOwen(CohortShapley):
             self.permutations = permutations
         else:
             self.permutations = np.array(list(legal_permutations_generator(union_structure)))
+        self.n_permutations = self.permutations.shape[0]
